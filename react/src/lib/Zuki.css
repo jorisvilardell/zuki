@@ -395,8 +395,8 @@
   50% { transform: scale(1.02); }
 }
 @keyframes zuki-snore-mouth {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.8); }
+  0%, 100% { transform: scale(1.8); }
+  50% { transform: scale(1); }
 }
 .anim-sleeping .zuk-carapace,
 .anim-sleeping .zuk-plastron {
