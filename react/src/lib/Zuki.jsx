@@ -212,6 +212,12 @@ const MouthBigOpen = ({ C }) => (
   </g>
 );
 
+const MouthSnore = ({ C }) => (
+  <g className="zuk-mouth zuk-mouth-snore">
+    <ellipse cx="130" cy="172" rx="6" ry="6" fill={C.ink}/>
+  </g>
+);
+
 const PlastronGroup = ({ C }) => (
   <g className="zuk-plastron"><ellipse cx="130" cy="170" rx="55" ry="49" fill={C.belly}/></g>
 );
@@ -298,10 +304,10 @@ const PropWrench = ({ C }) => (
 );
 
 const PropZ = ({ C }) => (
-  <g className="zuk-props zuk-props-z" fontFamily="system-ui, sans-serif" fontWeight="800" fill={C.ink}>
-    <text x="188" y="92" fontSize="26">Z</text>
-    <text x="208" y="66" fontSize="34">Z</text>
-    <text x="226" y="40" fontSize="22" opacity="0.6">z</text>
+  <g className="zuk-props zuk-props-z" fontFamily="system-ui, sans-serif" fontWeight="800" fill={C.body}>
+    <text className="zuk-z-1" x="188" y="92" fontSize="26">Z</text>
+    <text className="zuk-z-2" x="208" y="66" fontSize="34">Z</text>
+    <text className="zuk-z-3" x="226" y="40" fontSize="22" opacity="0.6">z</text>
   </g>
 );
 
@@ -322,13 +328,14 @@ export const PropCopGlasses = ({ C }) => (
 export const Zuki = ({
   pose = 'reference',
   theme = 'orange',
-  accessory = 'helmet',
+  accessory = 'none',
   mono = '',
   monoBg = '#FFFFFF',
   size = 260,
   className = '',
   title,
   stopText = 'STOP',
+  hideLimbs = false,
   extra
 }) => {
   const isMono = !!mono;
@@ -341,23 +348,24 @@ export const Zuki = ({
   let Props = null;
 
   switch (pose) {
-    case 'reference': break;
-    case 'salut':
-      L = { ax: 60, ay: 150, cx: 50, cy: 84, rot: 70, s: 0.6, flip: true };
-      Mouth = <MouthBigOpen C={C} />;
+    case 'idle': break;
+    case 'hello':
+      L = { ...REST_L };
+      Eyes = <EyesOpen C={C} />;
+      Mouth = <MouthSmile C={C} d={MOUTHS.smile} />;
       break;
     case 'process':
       Eyes = <EyesConcentrated C={C} />;
       Mouth = <MouthSmile C={C} d={MOUTHS.small} />;
       Props = <PropGears C={C} />;
       break;
-    case 'devis':
+    case 'quote':
       L = { ...REST_L };
       R = { ax: 202, ay: 180, cx: 200, cy: 140, rot: 100, s: 0.5 };
       Props = <PropDocument C={C} />;
       Mouth = <MouthSmile C={C} />;
       break;
-    case 'perplexe':
+    case 'perplexed':
       L = { ax: 50, ay: 160, cx: 20, cy: 110, rot: 25, s: 0.6, flip: true };
       R = { ax: 210, ay: 160, cx: 240, cy: 110, rot: 335, s: 0.6 };
       Eyes = <EyesOpen C={C} look={{ dx: 5, dy: -1 }} />;
@@ -371,21 +379,16 @@ export const Zuki = ({
       Mouth = <MouthBigOpen C={C} />;
       Props = <PropBurst C={C} />;
       break;
-    case 'champion':
-      L = { ax: 62, ay: 152, cx: 48, cy: 80, rot: 55, s: 0.56, flip: true };
-      R = { ax: 198, ay: 152, cx: 212, cy: 80, rot: 305, s: 0.56 };
-      Eyes = <EyesSparkle C={C} />;
-      Mouth = <MouthBigOpen C={C} />;
-      Props = <PropBurst C={C} />;
-      break;
     case 'travaille':
       R = { ax: 200, ay: 170, cx: 204, cy: 150, rot: 290, s: 0.52 };
       Props = <PropWrench C={C} />;
       Mouth = <MouthSmile C={C} d={MOUTHS.small} />;
       break;
     case 'endormi':
+      L = { ...REST_L, rot: -2 };
+      R = { ...REST_R, rot: 2 };
       Eyes = <EyesClosedHappy C={C} />;
-      Mouth = <MouthSmile C={C} d={MOUTHS.small} />;
+      Mouth = <MouthSnore C={C} />;
       Props = <PropZ C={C} />;
       break;
     case 'stop':
@@ -402,16 +405,18 @@ export const Zuki = ({
     <svg className={cls} viewBox={`0 0 ${VB} ${VB}`} width={size} height={size} style={{ overflow: 'visible' }} xmlns="http://www.w3.org/2000/svg" data-pose={pose}>
       {title && <title>{title}</title>}
       <g className="zuk-root">
-        <LegsGroup C={C} />
+        {!hideLimbs && <LegsGroup C={C} />}
         <CarapaceGroup C={C} />
         {!isMono && <PlastronGroup C={C} />}
         <AccessoryGroup name={accessory} C={C} />
         {Eyes}
         {Mouth}
-        <g className="zuk-pinces">
-          <ClawGroup side="left" p={L} C={C} />
-          <ClawGroup side="right" p={R} C={C} />
-        </g>
+        {!hideLimbs && (
+          <g className="zuk-pinces">
+            <ClawGroup side="left" p={L} C={C} />
+            <ClawGroup side="right" p={R} C={C} />
+          </g>
+        )}
         {Props}
         {extra && <g dangerouslySetInnerHTML={{ __html: extra }} />}
       </g>
@@ -420,35 +425,7 @@ export const Zuki = ({
 };
 
 export const ZukiFavicon = ({ theme = 'orange', size }) => {
-  const C = THEMES[theme] || THEMES.orange;
-  return (
-    <svg className="zuk zuk-favicon" viewBox="0 0 260 260" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="130" cy="150" rx="96" ry="84" fill={C.body}/>
-      {/* Main Rounded Dome (Scaled up slightly to match other accessories) */}
-      <path d="M55 83 A 75 68 0 0 1 205 83 Z" fill={C.helmet}/>
-
-      {/* Center Ridge */}
-      <path d="M113 83 L113 16 Q130 8 147 16 L147 83 Z" fill={C.helmet}/>
-      <path d="M113 83 L113 16 Q130 8 147 16 L147 83 Z" fill="rgba(255,255,255,0.15)"/>
-      <path d="M113 83 L113 16" stroke="rgba(0,0,0,0.1)" strokeWidth="2.5" fill="none"/>
-      <path d="M147 83 L147 16" stroke="rgba(0,0,0,0.1)" strokeWidth="2.5" fill="none"/>
-
-      {/* Side Ridges */}
-      <path d="M80 83 Q80 50 92 38" stroke="rgba(0,0,0,0.1)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-      <path d="M180 83 Q180 50 168 38" stroke="rgba(0,0,0,0.1)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-
-      {/* Brim (Dark thickness layer) */}
-      <path d="M42 93 Q130 83 218 93 A 7 7 0 0 0 218 79 Q130 69 42 79 A 7 7 0 0 0 42 93 Z" fill={C.helmet}/>
-      <path d="M42 93 Q130 83 218 93 A 7 7 0 0 0 218 79 Q130 69 42 79 A 7 7 0 0 0 42 93 Z" fill="rgba(0,0,0,0.15)"/>
-      
-      {/* Brim (Light top layer) */}
-      <path d="M42 89 Q130 79 218 89 A 7 7 0 0 0 218 75 Q130 65 42 75 A 7 7 0 0 0 42 89 Z" fill={C.helmet}/>
-      <circle cx="98" cy="138" r="30" fill="#FFFFFF"/>
-      <circle cx="103" cy="143" r="16" fill={C.ink}/>
-      <circle cx="162" cy="138" r="30" fill="#FFFFFF"/>
-      <circle cx="167" cy="143" r="16" fill={C.ink}/>
-    </svg>
-  );
+  return <Zuki pose="idle" theme={theme} size={size} accessory="helmet" hideLimbs={true} />;
 };
 
 export default Zuki;

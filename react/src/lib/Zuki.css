@@ -81,9 +81,13 @@
 }
 @keyframes zuki-spin { 100% { transform: rotate(360deg); } }
 @keyframes zuki-spin-rev { 100% { transform: rotate(-360deg); } }
-@keyframes zuki-bob      { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes zuki-process-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes zuki-process-anchor { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
 
-.anim-process .zuk-root { transform-origin: 50% 92%; animation: zuki-bob 1.5s ease-in-out infinite; }
+.anim-process .zuk-root { transform-origin: 50% 92%; animation: zuki-process-breathe 3s ease-in-out infinite; }
+.anim-process .zuk-leg-0, .anim-process .zuk-leg-1, .anim-process .zuk-leg-2, .anim-process .zuk-leg-3 {
+  animation: zuki-process-anchor 3s ease-in-out infinite;
+}
 .anim-process .zuk-claw-left  .zuk-jaw { animation: zuki-bite 0.7s ease-in-out infinite; }
 .anim-process .zuk-claw-right .zuk-jaw { animation: zuki-bite 0.7s ease-in-out infinite; animation-delay: 0.35s; }
 .anim-process .zuk-gear-a { transform-origin: center; animation: zuki-spin 2.4s linear infinite; }
@@ -165,32 +169,59 @@
 
 /* ---------- DEVIS : Pointer le contrat ----- */
 @keyframes zuki-devis-point-anim {
-  0%, 15%, 100% { transform: rotate(0deg) translate(0); }
-  28% { transform: rotate(165deg) translate(0); }
-  33% { transform: rotate(165deg) translate(6px, -2px); }
-  38% { transform: rotate(165deg) translate(0); }
-  43% { transform: rotate(165deg) translate(6px, -2px); }
-  48% { transform: rotate(165deg) translate(0); }
-  
-  58% { transform: rotate(185deg) translate(0); }
-  63% { transform: rotate(185deg) translate(6px, 0); }
-  68% { transform: rotate(185deg) translate(0); }
-  73% { transform: rotate(185deg) translate(6px, 0); }
-  78% { transform: rotate(185deg) translate(0); }
+  0%, 10%, 100% { transform: rotate(0) scale(1); }
+  25% { transform: rotate(-175deg) scale(1.3); }
+  30% { transform: rotate(-175deg) scale(1.3) translate(0, 5px); }
+  35% { transform: rotate(-175deg) scale(1.3); }
+  40% { transform: rotate(-175deg) scale(1.3) translate(0, 5px); }
+  45% { transform: rotate(-175deg) scale(1.3); }
+
+  60% { transform: rotate(-165deg) scale(1.4); }
+  65% { transform: rotate(-165deg) scale(1.4) translate(0, 5px); }
+  70% { transform: rotate(-165deg) scale(1.4); }
+
+  85% { transform: rotate(0) scale(1); }
 }
 @keyframes zuki-devis-jaw {
-  0%, 15%, 85%, 100% { transform: rotate(0); }
-  28%, 48% { transform: rotate(-25deg); }
-  58%, 78% { transform: rotate(-15deg); }
+  0%, 20%, 80%, 100% { transform: rotate(0); }
+  28% { transform: rotate(-25deg); }
+  33% { transform: rotate(5deg); }
+  38% { transform: rotate(-25deg); }
+  43% { transform: rotate(0); }
+  
+  58% { transform: rotate(-25deg); }
+  63% { transform: rotate(5deg); }
+  68% { transform: rotate(-25deg); }
+  73% { transform: rotate(0); }
 }
 
-.anim-devis .zuk-claw-left {
+@keyframes zuki-devis-look {
+  0%, 10%, 100% { transform: translate(0, 0); }
+  25%, 45% { transform: translate(6px, 2px); }
+  60%, 75% { transform: translate(6px, 6px); }
+}
+@keyframes zuki-devis-talk {
+  0%, 10%, 100% { transform: scaleY(1); }
+  20%, 25%, 30%, 35%, 40%, 45% { transform: scaleY(1.4) translateY(1px); }
+  22.5%, 27.5%, 32.5%, 37.5%, 42.5% { transform: scaleY(0.8); }
+  55%, 60%, 65%, 70%, 75% { transform: scaleY(1.4) translateY(1px); }
+  57.5%, 62.5%, 67.5%, 72.5% { transform: scaleY(0.8); }
+}
+
+.anim-quote .zuk-claw-left {
   transform-box: view-box;
   transform-origin: 58px 180px;
   animation: zuki-devis-point-anim 5s ease-in-out infinite;
 }
-.anim-devis .zuk-claw-left .zuk-jaw {
+.anim-quote .zuk-claw-left .zuk-jaw {
   animation: zuki-devis-jaw 5s ease-in-out infinite;
+}
+.anim-quote .zuk-mouth {
+  transform-origin: center;
+  animation: zuki-devis-talk 5s ease-in-out infinite;
+}
+.anim-quote .zuk-pupil, .anim-quote .zuk-eye-glint {
+  animation: zuki-devis-look 5s ease-in-out infinite;
 }
 
 /* ---------- SALUT : rebond d'entrée + coucou très vivant ---- */
@@ -200,13 +231,13 @@
 }
 @keyframes zuki-wave-organic {
   0%, 100% { transform: rotate(0); }
-  5%  { transform: rotate(-15deg); }
-  12% { transform: rotate(20deg); }
-  19% { transform: rotate(-10deg); }
-  26% { transform: rotate(18deg); }
-  33% { transform: rotate(-5deg); }
-  40% { transform: rotate(10deg); }
-  45% { transform: rotate(0); }
+  10% { transform: rotate(40deg); }
+  15% { transform: rotate(50deg); }
+  20% { transform: rotate(30deg); }
+  25% { transform: rotate(50deg); }
+  30% { transform: rotate(30deg); }
+  35% { transform: rotate(40deg); }
+  45%, 100% { transform: rotate(0); }
 }
 @keyframes zuki-pinch-organic {
   0%, 100% { transform: rotate(0); }
@@ -236,33 +267,44 @@
 }
 @keyframes zuki-chat {
   0%, 100% { transform: scaleY(1); }
-  10%, 30%, 50% { transform: scaleY(0.5) translateY(8px); }
-  20%, 40% { transform: scaleY(1.1); }
+  10%, 15%, 20%, 25%, 30% { transform: scaleY(1.5) translateY(2px); }
+  12.5%, 17.5%, 22.5%, 27.5% { transform: scaleY(0.8); }
+  35%, 100% { transform: scaleY(1); }
+}
+@keyframes zuki-cross-room {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-15px); }
+  75% { transform: translateX(15px); }
 }
 
 /* Removing initial bounce for Salut animation */
-.anim-salut .zuk-claw-left { transform-box: view-box; transform-origin: 60px 150px; animation: zuki-wave-organic 5s 0.5s ease-in-out infinite; }
-.anim-salut .zuk-claw-left .zuk-jaw { animation: zuki-pinch-organic 5s 0.5s ease-in-out infinite; }
+.anim-hello .zuk-claw-left { transform-box: view-box; transform-origin: 58px 180px; animation: zuki-wave-organic 5s ease-in-out infinite; }
+.anim-hello .zuk-claw-left .zuk-jaw { animation: zuki-pinch-organic 5s ease-in-out infinite; }
 
 /* Nouvelles animations vivantes */
-.anim-salut .zuk-leg-0, .anim-salut .zuk-leg-2 {
-  transform-origin: top center;
-  animation: zuki-happy-legs 0.8s ease-in-out infinite;
+@keyframes zuki-crab-walk-leg {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  25% { transform: rotate(-15deg) translateX(-4px); }
+  75% { transform: rotate(15deg) translateX(4px); }
 }
-.anim-salut .zuk-leg-1, .anim-salut .zuk-leg-3 {
+
+.anim-hello .zuk-leg-0, .anim-hello .zuk-leg-2 {
   transform-origin: top center;
-  animation: zuki-happy-legs 0.8s ease-in-out infinite alternate-reverse;
-  animation-delay: 0.4s;
+  animation: zuki-crab-walk-leg 0.4s ease-in-out infinite;
 }
-.anim-salut .zuk-pupil, .anim-salut .zuk-eye-glint {
+.anim-hello .zuk-leg-1, .anim-hello .zuk-leg-3 {
+  transform-origin: top center;
+  animation: zuki-crab-walk-leg 0.4s ease-in-out infinite reverse;
+}
+.anim-hello .zuk-pupil, .anim-hello .zuk-eye-glint {
   animation: zuki-look-around 5s ease-in-out infinite;
 }
-.anim-salut .zuk-claw-right {
+.anim-hello .zuk-claw-right {
   transform-box: view-box;
   transform-origin: 200px 150px;
   animation: zuki-arm-sway 2.5s ease-in-out infinite;
 }
-.anim-salut .zuk-mouth {
+.anim-hello .zuk-mouth {
   transform-origin: 50% 50%;
   animation: zuki-chat 5s ease-in-out infinite;
 }
@@ -312,34 +354,61 @@
   35%, 90% { transform: translateY(0) rotate(0); }
 }
 
-.anim-perplexe .zuk-root {
+.anim-perplexed .zuk-root {
   transform-origin: 50% 95%;
   animation: zuki-tilt-think 4s ease-in-out infinite;
 }
-.anim-perplexe .zuk-claw-left, .anim-perplexe .zuk-claw-right {
+.anim-perplexed .zuk-claw-left, .anim-perplexed .zuk-claw-right {
   transform-box: view-box;
   transform-origin: center;
   animation: zuki-serious-arm 4s ease-in-out infinite;
 }
-.anim-perplexe .zuk-jaw {
+.anim-perplexed .zuk-jaw {
   animation: zuki-snap-jaw 4s ease-in-out infinite;
 }
-.anim-perplexe .zuk-eyebrow {
+.anim-perplexed .zuk-eyebrow {
   transform-box: fill-box;
   transform-origin: center;
   animation: zuki-eyebrow-twitch 3s ease-in-out infinite;
 }
-.anim-perplexe .zuk-pupil, .anim-perplexe .zuk-eye-glint {
+.anim-perplexed .zuk-pupil, .anim-perplexed .zuk-eye-glint {
   animation: zuki-nervous-look 3s ease-in-out infinite;
 }
-.anim-perplexe .zuk-props-q {
+.anim-perplexed .zuk-props-q {
   transform-box: fill-box;
   transform-origin: center;
   animation: zuki-q-float 3s ease-in-out infinite;
 }
-.anim-perplexe .zuk-leg-3 {
+.anim-perplexed .zuk-leg-3 {
   transform-origin: top center;
   animation: zuki-foot-tap 4s ease-in-out infinite;
+}
+
+/* ---------- SLEEPING ---------- */
+@keyframes zuki-zzz {
+  0% { transform: scale(0.5) translate(0, 10px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: scale(1.2) translate(10px, -20px); opacity: 0; }
+}
+@keyframes zuki-snore {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+@keyframes zuki-snore-mouth {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.8); }
+}
+.anim-sleeping .zuk-carapace,
+.anim-sleeping .zuk-plastron {
+  transform-origin: 130px 150px;
+  animation: zuki-snore 3s ease-in-out infinite;
+}
+.anim-sleeping .zuk-z-1 { animation: zuki-zzz 3s linear infinite 0s; transform-origin: 188px 92px; }
+.anim-sleeping .zuk-z-2 { animation: zuki-zzz 3s linear infinite 1s; transform-origin: 208px 66px; }
+.anim-sleeping .zuk-z-3 { animation: zuki-zzz 3s linear infinite 2s; transform-origin: 226px 40px; }
+.anim-sleeping .zuk-mouth-snore ellipse {
+  transform-origin: 130px 172px;
+  animation: zuki-snore-mouth 3s ease-in-out infinite;
 }
 
 /* ---------- STOP : Erreur, refus (401, 403, 500) ---------- */
@@ -351,9 +420,27 @@
   0%, 100% { transform: rotate(0); }
   50% { transform: rotate(4deg); }
 }
+@keyframes zuki-cop-circuler {
+  0%, 100% { transform: rotate(2deg); }
+  50% { transform: rotate(-4deg); }
+}
+@keyframes zuki-stop-jaw {
+  0%, 30%, 80%, 100% { transform: rotate(0); }
+  45% { transform: rotate(-25deg); }
+  55% { transform: rotate(0); }
+  65% { transform: rotate(-25deg); }
+}
 .anim-stop .zuk-root {
   transform-origin: 50% 90%;
   animation: zuki-cop-breathe 4s ease-in-out infinite;
+}
+.anim-stop .zuk-claw-left {
+  transform-box: view-box;
+  transform-origin: 30px 90px;
+  animation: zuki-cop-circuler 4s ease-in-out infinite;
+}
+.anim-stop .zuk-claw-left .zuk-jaw {
+  animation: zuki-stop-jaw 4s ease-in-out infinite;
 }
 .anim-stop .zuk-claw-right {
   transform-box: view-box;
