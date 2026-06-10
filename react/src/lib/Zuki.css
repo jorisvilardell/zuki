@@ -421,8 +421,8 @@
   50% { transform: rotate(4deg); }
 }
 @keyframes zuki-cop-circuler {
-  0%, 100% { transform: rotate(2deg); }
-  50% { transform: rotate(-4deg); }
+  0%, 30%, 80%, 100% { transform: rotate(2deg); }
+  45%, 65% { transform: rotate(-4deg); }
 }
 @keyframes zuki-stop-jaw {
   0%, 30%, 80%, 100% { transform: rotate(0); }
@@ -446,6 +446,10 @@
   transform-box: view-box;
   transform-origin: 200px 160px;
   animation: zuki-cop-sign 4s ease-in-out infinite;
+}
+.anim-stop .zuk-eyes {
+  transform-origin: center;
+  animation: zuki-blink 4.5s ease-in-out infinite 1s;
 }
 
 @media (prefers-reduced-motion: reduce) {
