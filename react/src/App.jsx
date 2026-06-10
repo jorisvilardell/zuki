@@ -6,6 +6,7 @@ import Expressions from './components/Expressions';
 import Animations from './components/Animations';
 import Playground from './components/Playground';
 import Formats from './components/Formats';
+import Installation from './components/Installation';
 import Footer from './components/Footer';
 import './index.css';
 
@@ -33,6 +34,7 @@ function App() {
       <Animations animKeys={animKeys} retriggerAnim={retriggerAnim} />
       <Playground playState={playState} updatePlayState={updatePlayState} />
       <Formats />
+      <Installation />
       <Footer />
     </>
   );
