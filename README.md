@@ -1,0 +1,2 @@
+# zuki
+La Mascotte Zuki
