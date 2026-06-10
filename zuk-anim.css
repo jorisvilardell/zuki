@@ -1,0 +1,135 @@
+/* ==========================================================================
+   ZUKI — animations (CSS, ciblent les calques nommés du SVG)
+   Classe posée sur le <svg> : anim-idle / anim-calcule / anim-success /
+   anim-salut / anim-perplexe. transform-box: fill-box partout pour des
+   origines fiables.
+   ========================================================================== */
+
+.zuk .zuk-root,
+.zuk .zuk-eyes,
+.zuk .zuk-claw-left,
+.zuk .zuk-claw-right,
+.zuk .zuk-gear-a,
+.zuk .zuk-gear-b,
+.zuk .zuk-props-doc,
+.zuk .zuk-props-q,
+.zuk .zuk-ping {
+  transform-box: fill-box;
+}
+
+/* ---------- IDLE : balancement + clignement (boucle permanente) ---------- */
+@keyframes zuki-sway {
+  0%, 100% { transform: translateX(-2.5px) rotate(-0.7deg); }
+  50%      { transform: translateX(2.5px) rotate(0.7deg); }
+}
+@keyframes zuki-blink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  96.5%         { transform: scaleY(0.07); }
+}
+.anim-idle .zuk-root {
+  transform-origin: 50% 92%;
+  animation: zuki-sway 2s ease-in-out infinite;
+}
+.anim-idle .zuk-eyes {
+  transform-origin: center;
+  animation: zuki-blink 4.5s ease-in-out infinite;
+}
+
+/* IDLE « clap » (pose de référence) : lève un peu les bras + 2 claps + retour */
+@keyframes zuki-idle-armL {
+  0%, 6%   { transform: rotate(0); }
+  12%, 22% { transform: rotate(-13deg); }
+  28%      { transform: rotate(0); }
+  100%     { transform: rotate(0); }
+}
+@keyframes zuki-idle-armR {
+  0%, 6%   { transform: rotate(0); }
+  12%, 22% { transform: rotate(13deg); }
+  28%      { transform: rotate(0); }
+  100%     { transform: rotate(0); }
+}
+@keyframes zuki-idle-clap {
+  0%, 12%   { transform: rotate(0); }
+  15%       { transform: rotate(-16deg); }  /* clap 1 */
+  18.5%     { transform: rotate(7deg); }
+  22%       { transform: rotate(-16deg); }  /* clap 2 */
+  26%, 100% { transform: rotate(0); }
+}
+.anim-claps .zuk-claw-left  { transform-box: view-box; transform-origin: 58px 180px; animation: zuki-idle-armL 7s ease-in-out infinite; }
+.anim-claps .zuk-claw-right { transform-box: view-box; transform-origin: 202px 180px; animation: zuki-idle-armR 7s ease-in-out infinite; }
+.anim-claps .zuk-jaw        { animation: zuki-idle-clap 7s ease-in-out infinite; }
+
+/* ---------- CALCULE : pinces qui claquent + rouages (boucle 1.5s) -------- */
+@keyframes zuki-bite     { 0%,100% { transform: rotate(2deg); } 50% { transform: rotate(24deg); } }
+@keyframes zuki-spin     { to { transform: rotate(360deg); } }
+@keyframes zuki-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes zuki-bob      { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+.anim-calcule .zuk-root { transform-origin: 50% 92%; animation: zuki-bob 1.5s ease-in-out infinite; }
+.anim-calcule .zuk-claw-left  .zuk-jaw { animation: zuki-bite 0.7s ease-in-out infinite; }
+.anim-calcule .zuk-claw-right .zuk-jaw { animation: zuki-bite 0.7s ease-in-out infinite; animation-delay: 0.35s; }
+.anim-calcule .zuk-gear-a { transform-origin: center; animation: zuki-spin 2.4s linear infinite; }
+.anim-calcule .zuk-gear-b { transform-origin: center; animation: zuki-spin-rev 1.8s linear infinite; }
+
+/* ---------- SUCCESS « Devis prêt » : pop + doc + ping (1 seule fois) ----- */
+@keyframes zuki-pop {
+  0% { transform: scale(0.9); } 40% { transform: scale(1.06); }
+  70% { transform: scale(0.99); } 100% { transform: scale(1); }
+}
+@keyframes zuki-docin {
+  0%, 28% { transform: translateY(22px) scale(0.6); opacity: 0; }
+  100%    { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes zuki-ping {
+  0%, 52%  { transform: scale(0.55); opacity: 0; }
+  64%      { opacity: 0.8; }
+  100%     { transform: scale(1.55); opacity: 0; }
+}
+.anim-success .zuk-root { transform-origin: 50% 90%; animation: zuki-pop 0.6s ease-out both; }
+.anim-success .zuk-props-doc { transform-origin: center; animation: zuki-docin 0.8s 0.3s ease-out both; }
+.anim-success .zuk-ping { transform-origin: center; animation: zuki-ping 1.2s ease-out both; }
+
+/* ---------- SALUT : rebond d'entrée + coucou récurrent (7,5 s) + pince ---- */
+@keyframes zuki-bouncein {
+  0% { transform: scale(0); } 60% { transform: scale(1.1); }
+  80% { transform: scale(0.96); } 100% { transform: scale(1); }
+}
+@keyframes zuki-wave-loop {
+  0%, 2% { transform: rotate(0); }
+  6%   { transform: rotate(-11deg); }
+  11%  { transform: rotate(15deg); }
+  16%  { transform: rotate(-6deg); }
+  21%  { transform: rotate(15deg); }
+  26%  { transform: rotate(-3deg); }
+  30%  { transform: rotate(0); }
+  100% { transform: rotate(0); }
+}
+@keyframes zuki-pinch-loop {
+  0%, 4% { transform: rotate(0); }
+  9%   { transform: rotate(-16deg); }  /* pince */
+  14%  { transform: rotate(10deg); }
+  19%  { transform: rotate(-16deg); }  /* pince */
+  24%  { transform: rotate(8deg); }
+  30%  { transform: rotate(0); }
+  100% { transform: rotate(0); }
+}
+.anim-salut .zuk-root { transform-origin: 50% 86%; animation: zuki-bouncein 0.5s cubic-bezier(.2,.8,.3,1.25) both; }
+.anim-salut .zuk-claw-left { transform-box: view-box; transform-origin: 60px 150px; animation: zuki-wave-loop 7.5s 0.5s ease-in-out infinite; }
+.anim-salut .zuk-claw-left .zuk-jaw { animation: zuki-pinch-loop 7.5s 0.5s ease-in-out infinite; }
+
+/* ---------- PERPLEXE : inclinaison de tête + « ? » (boucle douce 3s) ----- */
+@keyframes zuki-tilt {
+  0%, 100% { transform: rotate(0); } 18% { transform: rotate(5deg); }
+  40% { transform: rotate(0); } 62% { transform: rotate(-5deg); } 84% { transform: rotate(0); }
+}
+@keyframes zuki-qpulse {
+  0%, 12%  { opacity: 0; transform: translateY(8px) scale(0.6); }
+  32%, 68% { opacity: 1; transform: translateY(0) scale(1); }
+  90%,100% { opacity: 0; transform: translateY(-4px) scale(0.9); }
+}
+.anim-perplexe .zuk-root { transform-origin: 50% 95%; animation: zuki-tilt 3s ease-in-out infinite; }
+.anim-perplexe .zuk-props-q { transform-origin: center; animation: zuki-qpulse 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .zuk * { animation: none !important; }
+}
