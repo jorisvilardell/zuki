@@ -269,7 +269,9 @@ const PropGears = ({ C }) => (
 
 const PropDocument = ({ C, transform }) => (
   <g className="zuk-props zuk-props-doc" transform={transform || ""}>
-    <rect x="168" y="140" width="64" height="80" rx="6" fill={C.light} transform="rotate(8 200 180)"/>
+    {/* Ombre portée : décale la feuille du fond pour qu'elle ressorte */}
+    <rect x="168" y="140" width="64" height="80" rx="6" fill="rgba(0,0,0,0.10)" transform="translate(3 4) rotate(8 200 180)"/>
+    <rect x="168" y="140" width="64" height="80" rx="6" fill={C.light} stroke="rgba(0,0,0,0.07)" strokeWidth="1.5" transform="rotate(8 200 180)"/>
     <g transform="rotate(8 200 180)" stroke={C.shell} strokeWidth="5" strokeLinecap="round">
       <line x1="178" y1="158" x2="222" y2="158"/>
       <line x1="178" y1="172" x2="222" y2="172"/>

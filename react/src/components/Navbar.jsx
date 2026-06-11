@@ -8,7 +8,7 @@ export default function Navbar({ theme, toggleTheme }) {
           <ZukiFavicon size={34} theme="orange" /> Zuki
         </div>
         <nav>
-          <a href="#expressions">Expressions</a>
+          <a href="#installation">Installation</a>
           <a href="#anims">Animations</a>
           <a href="#dress">Playground</a>
           <a href="#formats">Formats</a>
