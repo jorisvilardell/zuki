@@ -52,8 +52,8 @@ export default function App() {
       {/* A sleeping Zuki with a purple theme */}
       <Zuki pose="sleeping" theme="purple" size={260} />
 
-      {/* Zuki waving hello with an orange theme and a helmet! */}
-      <Zuki pose="hello" theme="orange" accessory="helmet" size={260} />
+      {/* Zuki waving hello with an orange theme and a green helmet! */}
+      <Zuki pose="hello" theme="orange" accessory="helmet" accessoryColor="#2EA043" size={260} />
 
       {/* Head-only Icon */}
       <ZukiFavicon theme="blue" size={64} />
@@ -71,7 +71,8 @@ The main full-body animated mascot.
 | :--- | :--- | :--- | :--- |
 | `pose` | `string` | `'idle'` | The animation state. Options: `'idle'`, `'hello'`, `'success'`, `'stop'`, `'sleeping'`, `'thinking'` |
 | `theme` | `string` | `'orange'` | Primary color theme. Options: `'orange'`, `'blue'`, `'green'`, `'purple'`, `'yellow'` |
-| `accessory` | `string` | `'none'` | What Zuki is wearing. Options: `'none'`, `'helmet'` |
+| `accessory` | `string` | `'none'` | What Zuki is wearing. Options: `'none'`, `'helmet'`, `'cap'`, `'beanie'`, `'headset'`, `'party'` |
+| `accessoryColor`| `string` | *Theme* | Override the color of the accessory with any valid CSS color (e.g., `'#FF5555'`). |
 | `size` | `number` | `100%` | Width of the component in pixels. Will scale SVG proportionately. |
 
 ### `<ZukiFavicon />`

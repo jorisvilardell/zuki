@@ -332,6 +332,7 @@ export const Zuki = ({
   pose = 'reference',
   theme = 'orange',
   accessory = 'none',
+  accessoryColor,
   mono = '',
   monoBg = '#FFFFFF',
   size = 260,
@@ -342,7 +343,9 @@ export const Zuki = ({
   extra
 }) => {
   const isMono = !!mono;
-  const C = isMono ? { shell: mono, body: mono, belly: mono, helmet: mono, ink: monoBg, light: monoBg } : (THEMES[theme] || THEMES.orange);
+  const baseC = isMono ? { shell: mono, body: mono, belly: mono, helmet: mono, ink: monoBg, light: monoBg } : (THEMES[theme] || THEMES.orange);
+  const C = { ...baseC };
+  if (accessoryColor) C.helmet = accessoryColor;
 
   let L = { ...REST_L };
   let R = { ...REST_R };

@@ -12,7 +12,7 @@ import './index.css';
 
 function App() {
   const [theme, setTheme] = useState('dark');
-  const [playState, setPlayState] = useState({ pose: 'idle', accessory: 'none', theme: 'orange' });
+  const [playState, setPlayState] = useState({ pose: 'idle', accessory: 'none', theme: 'orange', accessoryColor: '' });
   const [animKeys, setAnimKeys] = useState({});
 
   useEffect(() => {
