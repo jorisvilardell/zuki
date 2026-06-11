@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zuki } from '../lib';
 import { POSES, ACCESSORIES, THEMES, ANIMATIONS } from './constants';
 
@@ -47,7 +46,7 @@ export default function Playground({ playState, updatePlayState }) {
                     aria-pressed={playState.theme === t.v}
                     onClick={() => updatePlayState('theme', t.v)}
                   >
-                    <span className="sw-dot" style={{ background: t.v === 'orange' ? '#F2552C' : '#4F6EF7' }}></span> {t.t}
+                    <span className="sw-dot" style={{ background: t.hex }}></span> {t.t}
                   </button>
                 ))}
               </div>

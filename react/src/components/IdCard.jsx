@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zuki } from '../lib';
 
 export default function IdCard() {

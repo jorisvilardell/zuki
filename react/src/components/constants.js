@@ -30,6 +30,9 @@ export const ACCESSORIES = [
 ];
 
 export const THEMES = [
-  { v: 'orange', t: 'Orange' },
-  { v: 'blue', t: 'Blue' },
+  { v: 'orange', t: 'Orange', hex: '#F2552C' },
+  { v: 'blue', t: 'Blue', hex: '#4F6EF7' },
+  { v: 'green', t: 'Green', hex: '#2EA043' },
+  { v: 'purple', t: 'Purple', hex: '#8250DF' },
+  { v: 'yellow', t: 'Yellow', hex: '#E3B341' }
 ];

@@ -1,9 +1,12 @@
-import React from 'react';
+import { Fragment } from 'react';
 import './Zuki.css';
 
 const THEMES = {
   orange: { shell: '#F2552C', body: '#E24921', belly: '#FF8E63', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
-  blue:   { shell: '#4F6EF7', body: '#3A59E0', belly: '#86A0FB', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' }
+  blue:   { shell: '#4F6EF7', body: '#3A59E0', belly: '#86A0FB', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  green:  { shell: '#2EA043', body: '#238636', belly: '#56D364', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  purple: { shell: '#8250DF', body: '#6E40C9', belly: '#A371F7', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  yellow: { shell: '#E3B341', body: '#D29922', belly: '#F2CC60', helmet: '#F2552C', ink: '#2B2B33', light: '#FFFFFF' }
 };
 
 const VB = 260;
@@ -156,11 +159,11 @@ const EyesOpen = ({ C, look = { dx: 0, dy: 4 } }) => {
   const renderEye = (ex) => {
     const px = ex + look.dx, py = EYE.cy + look.dy;
     return (
-      <React.Fragment key={ex}>
+      <Fragment key={ex}>
         <circle cx={ex} cy={EYE.cy} r={EYE.r} fill={C.light}/>
         <circle className="zuk-pupil" cx={n(px)} cy={n(py)} r={PUP.r} fill={C.ink}/>
         <circle className="zuk-eye-glint" cx={n(px + 5)} cy={n(py - 6)} r="5.5" fill={C.light}/>
-      </React.Fragment>
+      </Fragment>
     );
   };
   return <g className="zuk-eyes">{renderEye(EYE.lx)}{renderEye(EYE.rx)}</g>;
@@ -184,12 +187,12 @@ const EyesSparkle = ({ C, look = { dx: 0, dy: 2 } }) => {
   const renderEye = (ex) => {
     const px = ex + look.dx, py = EYE.cy + look.dy;
     return (
-      <React.Fragment key={ex}>
+      <Fragment key={ex}>
         <circle cx={ex} cy={EYE.cy} r={EYE.r} fill={C.light}/>
         <circle className="zuk-pupil" cx={n(px)} cy={n(py)} r={PUP.r} fill={C.ink}/>
         <circle className="zuk-eye-glint" cx={n(px + 5)} cy={n(py - 6)} r="6" fill={C.light}/>
         <circle className="zuk-eye-glint" cx={n(px - 5)} cy={n(py + 5)} r="3" fill={C.light}/>
-      </React.Fragment>
+      </Fragment>
     );
   };
   return <g className="zuk-eyes">{renderEye(EYE.lx)}{renderEye(EYE.rx)}</g>;
@@ -280,7 +283,7 @@ const PropEyebrow = ({ C }) => (
   <path className="zuk-eyebrow" d="M146 98 Q160 90 174 98" stroke={C.ink} strokeWidth="7" fill="none" strokeLinecap="round"/>
 );
 
-const PropQuestion = ({ C }) => (
+const PropQuestion = () => (
   <g className="zuk-props zuk-props-q">
     <text x="206" y="64" fontFamily="system-ui, sans-serif" fontSize="58" fontWeight="800" fill="currentColor">?</text>
   </g>

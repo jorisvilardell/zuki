@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zuki, ZukiFavicon } from '../lib';
 
 export default function Formats() {
