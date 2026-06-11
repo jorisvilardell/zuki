@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import IdCard from './components/IdCard';
-import Expressions from './components/Expressions';
 import Animations from './components/Animations';
 import Playground from './components/Playground';
 import Formats from './components/Formats';
@@ -30,7 +29,6 @@ function App() {
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <Hero />
       <IdCard />
-      <Expressions />
       <Animations animKeys={animKeys} retriggerAnim={retriggerAnim} />
       <Playground playState={playState} updatePlayState={updatePlayState} />
       <Formats />
