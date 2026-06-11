@@ -56,7 +56,8 @@ The main full-body animated mascot.
 | :--- | :--- | :--- | :--- |
 | `pose` | `string` | `'idle'` | The animation/pose state. Options: `'idle'`, `'hello'`, `'success'`, `'stop'`, `'sleeping'`, `'thinking'` |
 | `theme` | `string` | `'orange'` | Primary color theme. Options: `'orange'`, `'blue'`, `'green'`, `'purple'`, `'yellow'` |
-| `accessory` | `string` | `'none'` | What Zuki is wearing. Options: `'none'`, `'helmet'` |
+| `accessory` | `string` | `'none'` | What Zuki is wearing. Options: `'none'`, `'helmet'`, `'cap'`, `'beanie'`, `'headset'`, `'party'` |
+| `accessoryColor`| `string` | *Theme specific* | Override the color of the accessory with any valid CSS color (e.g., `'#FF5555'`). |
 | `size` | `number` | `100%` | Width of the component in pixels. Will scale SVG proportionately. |
 | `className` | `string` | `''` | Additional CSS classes applied to the root element. |
 
