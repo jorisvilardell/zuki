@@ -1,4 +1,3 @@
-import React from 'react';
 import { Zuki } from '../lib';
 import { POSES } from './constants';
 
