@@ -1,4 +1,4 @@
-import e from "react";
+import { Fragment as e } from "react";
 import { Fragment as t, jsx as n, jsxs as r } from "react/jsx-runtime";
 //#region src/lib/Zuki.jsx
 var i = {
@@ -15,6 +15,30 @@ var i = {
 		body: "#3A59E0",
 		belly: "#86A0FB",
 		helmet: "#FFC53D",
+		ink: "#2B2B33",
+		light: "#FFFFFF"
+	},
+	green: {
+		shell: "#2EA043",
+		body: "#238636",
+		belly: "#56D364",
+		helmet: "#FFC53D",
+		ink: "#2B2B33",
+		light: "#FFFFFF"
+	},
+	purple: {
+		shell: "#8250DF",
+		body: "#6E40C9",
+		belly: "#A371F7",
+		helmet: "#FFC53D",
+		ink: "#2B2B33",
+		light: "#FFFFFF"
+	},
+	yellow: {
+		shell: "#E3B341",
+		body: "#D29922",
+		belly: "#F2CC60",
+		helmet: "#F2552C",
 		ink: "#2B2B33",
 		light: "#FFFFFF"
 	}
@@ -347,7 +371,7 @@ var d = ({ side: e, p: t, C: i }) => {
 } }) => {
 	let a = (a) => {
 		let o = a + i.dx, u = s.cy + i.dy;
-		return /* @__PURE__ */ r(e.Fragment, { children: [
+		return /* @__PURE__ */ r(e, { children: [
 			/* @__PURE__ */ n("circle", {
 				cx: a,
 				cy: s.cy,
@@ -404,7 +428,7 @@ var d = ({ side: e, p: t, C: i }) => {
 } }) => {
 	let a = (a) => {
 		let o = a + i.dx, u = s.cy + i.dy;
-		return /* @__PURE__ */ r(e.Fragment, { children: [
+		return /* @__PURE__ */ r(e, { children: [
 			/* @__PURE__ */ n("circle", {
 				cx: a,
 				cy: s.cy,
@@ -544,7 +568,18 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 			width: "64",
 			height: "80",
 			rx: "6",
+			fill: "rgba(0,0,0,0.10)",
+			transform: "translate(3 4) rotate(8 200 180)"
+		}),
+		/* @__PURE__ */ n("rect", {
+			x: "168",
+			y: "140",
+			width: "64",
+			height: "80",
+			rx: "6",
 			fill: e.light,
+			stroke: "rgba(0,0,0,0.07)",
+			strokeWidth: "1.5",
 			transform: "rotate(8 200 180)"
 		}),
 		/* @__PURE__ */ r("g", {
@@ -590,7 +625,7 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 	strokeWidth: "7",
 	fill: "none",
 	strokeLinecap: "round"
-}), M = ({ C: e }) => /* @__PURE__ */ n("g", {
+}), M = () => /* @__PURE__ */ n("g", {
 	className: "zuk-props zuk-props-q",
 	children: /* @__PURE__ */ n("text", {
 		x: "206",
@@ -668,41 +703,43 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 			children: "z"
 		})
 	]
-}), I = ({ pose: e = "reference", theme: o = "orange", accessory: s = "none", mono: c = "", monoBg: l = "#FFFFFF", size: u = 260, className: p = "", title: D, stopText: O = "STOP", hideLimbs: I = !1, extra: L }) => {
-	let R = !!c, z = R ? {
-		shell: c,
-		body: c,
-		belly: c,
-		helmet: c,
-		ink: l,
-		light: l
-	} : i[o] || i.orange, B = { ...T }, V = { ...E }, H = /* @__PURE__ */ n(h, { C: z }), U = /* @__PURE__ */ n(b, { C: z }), W = null;
+}), I = ({ pose: e = "reference", theme: o = "orange", accessory: s = "none", accessoryColor: c, mono: l = "", monoBg: u = "#FFFFFF", size: p = 260, className: D = "", title: O, stopText: I = "STOP", hideLimbs: L = !1, extra: R }) => {
+	let z = !!l, B = { ...z ? {
+		shell: l,
+		body: l,
+		belly: l,
+		helmet: l,
+		ink: u,
+		light: u
+	} : i[o] || i.orange };
+	c && (B.helmet = c);
+	let V = { ...T }, H = { ...E }, U = /* @__PURE__ */ n(h, { C: B }), W = /* @__PURE__ */ n(b, { C: B }), G = null;
 	switch (e) {
 		case "idle": break;
 		case "hello":
-			B = { ...T }, H = /* @__PURE__ */ n(h, { C: z }), U = /* @__PURE__ */ n(b, {
-				C: z,
+			V = { ...T }, U = /* @__PURE__ */ n(h, { C: B }), W = /* @__PURE__ */ n(b, {
+				C: B,
 				d: y.smile
 			});
 			break;
 		case "process":
-			H = /* @__PURE__ */ n(_, { C: z }), U = /* @__PURE__ */ n(b, {
-				C: z,
+			U = /* @__PURE__ */ n(_, { C: B }), W = /* @__PURE__ */ n(b, {
+				C: B,
 				d: y.small
-			}), W = /* @__PURE__ */ n(k, { C: z });
+			}), G = /* @__PURE__ */ n(k, { C: B });
 			break;
 		case "quote":
-			B = { ...T }, V = {
+			V = { ...T }, H = {
 				ax: 202,
 				ay: 180,
 				cx: 200,
 				cy: 140,
 				rot: 100,
 				s: .5
-			}, W = /* @__PURE__ */ n(A, { C: z }), U = /* @__PURE__ */ n(b, { C: z });
+			}, G = /* @__PURE__ */ n(A, { C: B }), W = /* @__PURE__ */ n(b, { C: B });
 			break;
 		case "perplexed":
-			B = {
+			V = {
 				ax: 50,
 				ay: 160,
 				cx: 20,
@@ -710,26 +747,26 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 				rot: 25,
 				s: .6,
 				flip: !0
-			}, V = {
+			}, H = {
 				ax: 210,
 				ay: 160,
 				cx: 240,
 				cy: 110,
 				rot: 335,
 				s: .6
-			}, H = /* @__PURE__ */ n(h, {
-				C: z,
+			}, U = /* @__PURE__ */ n(h, {
+				C: B,
 				look: {
 					dx: 5,
 					dy: -1
 				}
-			}), U = /* @__PURE__ */ n(b, {
-				C: z,
+			}), W = /* @__PURE__ */ n(b, {
+				C: B,
 				d: y.neutral
-			}), W = /* @__PURE__ */ r(t, { children: [/* @__PURE__ */ n(j, { C: z }), /* @__PURE__ */ n(M, { C: z })] });
+			}), G = /* @__PURE__ */ r(t, { children: [/* @__PURE__ */ n(j, { C: B }), /* @__PURE__ */ n(M, { C: B })] });
 			break;
 		case "success":
-			B = {
+			V = {
 				ax: 62,
 				ay: 152,
 				cx: 48,
@@ -737,39 +774,39 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 				rot: 55,
 				s: .56,
 				flip: !0
-			}, V = {
+			}, H = {
 				ax: 198,
 				ay: 152,
 				cx: 212,
 				cy: 80,
 				rot: 305,
 				s: .56
-			}, H = /* @__PURE__ */ n(v, { C: z }), U = /* @__PURE__ */ n(x, { C: z }), W = /* @__PURE__ */ n(N, { C: z });
+			}, U = /* @__PURE__ */ n(v, { C: B }), W = /* @__PURE__ */ n(x, { C: B }), G = /* @__PURE__ */ n(N, { C: B });
 			break;
 		case "travaille":
-			V = {
+			H = {
 				ax: 200,
 				ay: 170,
 				cx: 204,
 				cy: 150,
 				rot: 290,
 				s: .52
-			}, W = /* @__PURE__ */ n(P, { C: z }), U = /* @__PURE__ */ n(b, {
-				C: z,
+			}, G = /* @__PURE__ */ n(P, { C: B }), W = /* @__PURE__ */ n(b, {
+				C: B,
 				d: y.small
 			});
 			break;
 		case "endormi":
-			B = {
+			V = {
 				...T,
 				rot: -2
-			}, V = {
+			}, H = {
 				...E,
 				rot: 2
-			}, H = /* @__PURE__ */ n(g, { C: z }), U = /* @__PURE__ */ n(S, { C: z }), W = /* @__PURE__ */ n(F, { C: z });
+			}, U = /* @__PURE__ */ n(g, { C: B }), W = /* @__PURE__ */ n(S, { C: B }), G = /* @__PURE__ */ n(F, { C: B });
 			break;
 		case "stop":
-			B = { ...T }, V = {
+			V = { ...T }, H = {
 				ax: 200,
 				ay: 160,
 				cx: 230,
@@ -777,47 +814,47 @@ var k = ({ C: e }) => /* @__PURE__ */ r("g", {
 				rot: 270,
 				s: .7,
 				holdSign: !0,
-				signText: O
-			}, H = /* @__PURE__ */ n(_, { C: z }), U = /* @__PURE__ */ n(b, {
-				C: z,
+				signText: I
+			}, U = /* @__PURE__ */ n(_, { C: B }), W = /* @__PURE__ */ n(b, {
+				C: B,
 				d: y.neutral
 			});
 			break;
 	}
 	return /* @__PURE__ */ r("svg", {
-		className: `zuk ${p}`.trim(),
+		className: `zuk ${D}`.trim(),
 		viewBox: `0 0 ${a} ${a}`,
-		width: u,
-		height: u,
+		width: p,
+		height: p,
 		style: { overflow: "visible" },
 		xmlns: "http://www.w3.org/2000/svg",
 		"data-pose": e,
-		children: [D && /* @__PURE__ */ n("title", { children: D }), /* @__PURE__ */ r("g", {
+		children: [O && /* @__PURE__ */ n("title", { children: O }), /* @__PURE__ */ r("g", {
 			className: "zuk-root",
 			children: [
-				!I && /* @__PURE__ */ n(f, { C: z }),
-				/* @__PURE__ */ n(w, { C: z }),
-				!R && /* @__PURE__ */ n(C, { C: z }),
+				!L && /* @__PURE__ */ n(f, { C: B }),
+				/* @__PURE__ */ n(w, { C: B }),
+				!z && /* @__PURE__ */ n(C, { C: B }),
 				/* @__PURE__ */ n(m, {
 					name: s,
-					C: z
+					C: B
 				}),
-				H,
 				U,
-				!I && /* @__PURE__ */ r("g", {
+				W,
+				!L && /* @__PURE__ */ r("g", {
 					className: "zuk-pinces",
 					children: [/* @__PURE__ */ n(d, {
 						side: "left",
-						p: B,
-						C: z
+						p: V,
+						C: B
 					}), /* @__PURE__ */ n(d, {
 						side: "right",
-						p: V,
-						C: z
+						p: H,
+						C: B
 					})]
 				}),
-				W,
-				L && /* @__PURE__ */ n("g", { dangerouslySetInnerHTML: { __html: L } })
+				G,
+				R && /* @__PURE__ */ n("g", { dangerouslySetInnerHTML: { __html: R } })
 			]
 		})]
 	});

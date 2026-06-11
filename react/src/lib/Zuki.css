@@ -5,6 +5,13 @@
    origines fiables.
    ========================================================================== */
 
+.zuk {
+  /* Courbes réutilisables — respiration douce, rebond organique, claquement net */
+  --ease-soft: cubic-bezier(0.45, 0.05, 0.35, 1);     /* respiration / balancement */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);     /* overshoot (pop, atterrissage) */
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);          /* fermeture rapide (clignement, morsure) */
+}
+
 .zuk .zuk-root,
 .zuk .zuk-eyes,
 .zuk .zuk-claw-left,
@@ -15,18 +22,25 @@
 .zuk .zuk-props-q,
 .zuk .zuk-ping,
 .zuk .zuk-mouth,
+.zuk .zuk-carapace,
+.zuk .zuk-plastron,
 .zuk [class*="zuk-leg"] {
   transform-box: fill-box;
 }
 
-/* ---------- IDLE : balancement + clignement (boucle permanente) ---------- */
+/* ---------- IDLE : respiration + clignement (boucle permanente) ---------- */
+/* Respiration : montée lente, légère expansion du ventre (squash inversé), descente */
 @keyframes zuki-sway {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-2px); }
+  0%      { transform: translateY(0) scaleX(1) scaleY(1); }
+  45%     { transform: translateY(-2.5px) scaleX(0.992) scaleY(1.014); }
+  55%     { transform: translateY(-2.5px) scaleX(0.992) scaleY(1.014); }
+  100%    { transform: translateY(0) scaleX(1) scaleY(1); }
 }
+/* Clignement : fermeture nette puis ouverture un peu plus lente (réaliste) */
 @keyframes zuki-blink {
-  0%, 93%, 100% { transform: scaleY(1); }
-  96.5%         { transform: scaleY(0.07); }
+  0%, 92%, 100% { transform: scaleY(1); animation-timing-function: var(--ease-snap); }
+  94%           { transform: scaleY(0.06); animation-timing-function: ease-out; }
+  96.5%         { transform: scaleY(1); }
 }
 @keyframes zuki-idle-look {
   0%, 15% { transform: translate(0, 0); }
@@ -39,7 +53,7 @@
 }
 .anim-idle .zuk-root {
   transform-origin: 50% 92%;
-  animation: zuki-sway 2s ease-in-out infinite;
+  animation: zuki-sway 3.4s var(--ease-soft) infinite;
 }
 .anim-idle .zuk-eyes {
   transform-origin: center;
@@ -54,12 +68,14 @@
   0%, 6%   { transform: rotate(0); }
   12%, 22% { transform: rotate(-13deg); }
   28%      { transform: rotate(0); }
+  64%      { transform: rotate(-2.5deg); }   /* respiration des bras pendant le repos */
   100%     { transform: rotate(0); }
 }
 @keyframes zuki-idle-armR {
   0%, 6%   { transform: rotate(0); }
   12%, 22% { transform: rotate(13deg); }
   28%      { transform: rotate(0); }
+  64%      { transform: rotate(2.5deg); }     /* respiration des bras pendant le repos */
   100%     { transform: rotate(0); }
 }
 @keyframes zuki-idle-clap {
@@ -76,8 +92,9 @@
 
 /* ---------- PROCESS : pinces qui claquent + rouages (boucle 1.5s) -------- */
 @keyframes zuki-bite {
-  0%, 100% { transform: rotate(0); }
-  50% { transform: rotate(20deg); }
+  0%   { transform: rotate(0); animation-timing-function: var(--ease-snap); }
+  35%  { transform: rotate(20deg); animation-timing-function: ease-out; }  /* claque vite */
+  100% { transform: rotate(0); }                                          /* rouvre lentement */
 }
 @keyframes zuki-spin { 100% { transform: rotate(360deg); } }
 @keyframes zuki-spin-rev { 100% { transform: rotate(-360deg); } }
@@ -95,16 +112,17 @@
 
 /* ---------- SUCCESS « Champion » : Hip hip hip, Ouraaa ! (boucle) ----- */
 @keyframes zuki-champ-jump {
-  0%, 100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0) scaleX(1) scaleY(1); }
   10% { transform: translateY(-2px); }
   15% { transform: translateY(0); }
   20% { transform: translateY(-2px); }
   25% { transform: translateY(0); }
   30% { transform: translateY(-2px); }
   35% { transform: translateY(0); }
-  42% { transform: translateY(3px); }
-  50% { transform: translateY(-10px); }
-  65% { transform: translateY(0); }
+  42% { transform: translateY(3px) scaleX(1.05) scaleY(0.93); animation-timing-function: var(--ease-back); }  /* flexion : prise d'élan */
+  50% { transform: translateY(-10px) scaleX(0.95) scaleY(1.07); }                                            /* apex : étirement */
+  58% { transform: translateY(0) scaleX(1.06) scaleY(0.92); }                                                /* impact : écrasement */
+  65% { transform: translateY(0) scaleX(1) scaleY(1); animation-timing-function: var(--ease-back); }         /* rebond / repos */
 }
 @keyframes zuki-champ-armL {
   0%, 100% { transform: translateY(0) rotate(0); }
@@ -170,6 +188,7 @@
 /* ---------- DEVIS : Pointer le contrat ----- */
 @keyframes zuki-devis-point-anim {
   0%, 10%, 100% { transform: rotate(0) scale(1); }
+  16% { transform: rotate(14deg) scale(1.05); animation-timing-function: var(--ease-back); }  /* recul : prise d'élan avant de pointer */
   25% { transform: rotate(-175deg) scale(1.3); }
   30% { transform: rotate(-175deg) scale(1.3) translate(0, 5px); }
   35% { transform: rotate(-175deg) scale(1.3); }
@@ -287,14 +306,23 @@
   25% { transform: rotate(-15deg) translateX(-4px); }
   75% { transform: rotate(15deg) translateX(4px); }
 }
+/* Léger transfert de poids synchronisé sur les pas : le corps « marche » au lieu de trembler */
+@keyframes zuki-hello-bob {
+  0%, 100% { transform: translateY(0) rotate(-0.6deg); }
+  50% { transform: translateY(-2px) rotate(0.6deg); }
+}
 
+.anim-hello .zuk-root {
+  transform-origin: 50% 92%;
+  animation: zuki-hello-bob 0.9s ease-in-out infinite;
+}
 .anim-hello .zuk-leg-0, .anim-hello .zuk-leg-2 {
   transform-origin: top center;
-  animation: zuki-crab-walk-leg 0.4s ease-in-out infinite;
+  animation: zuki-crab-walk-leg 0.45s ease-in-out infinite;
 }
 .anim-hello .zuk-leg-1, .anim-hello .zuk-leg-3 {
   transform-origin: top center;
-  animation: zuki-crab-walk-leg 0.4s ease-in-out infinite reverse;
+  animation: zuki-crab-walk-leg 0.45s ease-in-out infinite reverse;
 }
 .anim-hello .zuk-pupil, .anim-hello .zuk-eye-glint {
   animation: zuki-look-around 5s ease-in-out infinite;
@@ -311,8 +339,9 @@
 
 /* ---------- PERPLEXE : animation vivante de réflexion ----- */
 @keyframes zuki-tilt-think {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  0%, 100% { transform: rotate(0) translateY(0); }
+  30% { transform: rotate(-2.2deg) translateY(-2px); }   /* penche d'un côté... */
+  70% { transform: rotate(2.2deg) translateY(-1px); }    /* ...puis de l'autre : « hmm » */
 }
 @keyframes zuki-serious-arm {
   0%, 40% { transform: rotate(0); }
@@ -386,29 +415,40 @@
 
 /* ---------- SLEEPING ---------- */
 @keyframes zuki-zzz {
-  0% { transform: scale(0.5) translate(0, 10px); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: scale(1.2) translate(10px, -20px); opacity: 0; }
+  0% { transform: scale(0.5) translate(0, 10px) rotate(-8deg); opacity: 0; }
+  35% { opacity: 1; }
+  60% { opacity: 1; transform: scale(1) translate(6px, -8px) rotate(4deg); }
+  100% { transform: scale(1.2) translate(12px, -20px) rotate(8deg); opacity: 0; }
+}
+/* Respiration globale : inspiration lente, courte pause, expiration */
+@keyframes zuki-sleep-breath {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-3px); }
+  60% { transform: translateY(-3px); }
 }
 @keyframes zuki-snore {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  45%, 60% { transform: scale(1.025); }
 }
 @keyframes zuki-snore-mouth {
   0%, 100% { transform: scale(1.8); }
-  50% { transform: scale(1); }
+  45%, 60% { transform: scale(1); }
+}
+.anim-sleeping .zuk-root {
+  transform-origin: 50% 95%;
+  animation: zuki-sleep-breath 3.6s var(--ease-soft) infinite;
 }
 .anim-sleeping .zuk-carapace,
 .anim-sleeping .zuk-plastron {
   transform-origin: 130px 150px;
-  animation: zuki-snore 3s ease-in-out infinite;
+  animation: zuki-snore 3.6s var(--ease-soft) infinite;
 }
-.anim-sleeping .zuk-z-1 { animation: zuki-zzz 3s linear infinite 0s; transform-origin: 188px 92px; }
-.anim-sleeping .zuk-z-2 { animation: zuki-zzz 3s linear infinite 1s; transform-origin: 208px 66px; }
-.anim-sleeping .zuk-z-3 { animation: zuki-zzz 3s linear infinite 2s; transform-origin: 226px 40px; }
+.anim-sleeping .zuk-z-1 { animation: zuki-zzz 3s ease-out infinite 0s; transform-origin: 188px 92px; }
+.anim-sleeping .zuk-z-2 { animation: zuki-zzz 3s ease-out infinite 1s; transform-origin: 208px 66px; }
+.anim-sleeping .zuk-z-3 { animation: zuki-zzz 3s ease-out infinite 2s; transform-origin: 226px 40px; }
 .anim-sleeping .zuk-mouth-snore ellipse {
   transform-origin: 130px 172px;
-  animation: zuki-snore-mouth 3s ease-in-out infinite;
+  animation: zuki-snore-mouth 3.6s var(--ease-soft) infinite;
 }
 
 /* ---------- STOP : Erreur, refus (401, 403, 500) ---------- */
@@ -445,7 +485,7 @@
 .anim-stop .zuk-claw-right {
   transform-box: view-box;
   transform-origin: 200px 160px;
-  animation: zuki-cop-sign 4s ease-in-out infinite;
+  animation: zuki-cop-sign 4s var(--ease-soft) infinite;
 }
 .anim-stop .zuk-eyes {
   transform-origin: center;

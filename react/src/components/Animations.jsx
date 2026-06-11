@@ -7,19 +7,19 @@ export default function Animations({ animKeys, retriggerAnim }) {
       <div className="wrap">
         <div className="sec-head">
           <div className="eyebrow">Movement</div>
-          <h2>Five Animations</h2>
+          <h2>{ANIMATIONS.length} Animations</h2>
           <p>Hover or click a card to replay. Designed to replace spinners and enrich product states.</p>
         </div>
         <div className="grid anim-grid">
           {ANIMATIONS.map((anim, i) => (
             <div className="card demo" key={i} onClick={() => retriggerAnim(i)}>
               <div className="stage">
-                <Zuki 
+                <Zuki
                   key={animKeys[i] || i}
-                  pose={anim.pose} 
-                  className={anim.anim} 
+                  pose={anim.pose}
+                  className={anim.anim}
                   accessory="none"
-                  size="100%" 
+                  size="100%"
                   style={{ maxWidth: '190px' }}
                 />
                 {anim.loop ? <span className="badge-loop">loop</span> : <button className="replay" title="Replay">↻</button>}
