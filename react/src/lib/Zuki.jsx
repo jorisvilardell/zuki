@@ -3,7 +3,10 @@ import './Zuki.css';
 
 const THEMES = {
   orange: { shell: '#F2552C', body: '#E24921', belly: '#FF8E63', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
-  blue:   { shell: '#4F6EF7', body: '#3A59E0', belly: '#86A0FB', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' }
+  blue:   { shell: '#4F6EF7', body: '#3A59E0', belly: '#86A0FB', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  green:  { shell: '#2EA043', body: '#238636', belly: '#56D364', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  purple: { shell: '#8250DF', body: '#6E40C9', belly: '#A371F7', helmet: '#FFC53D', ink: '#2B2B33', light: '#FFFFFF' },
+  yellow: { shell: '#E3B341', body: '#D29922', belly: '#F2CC60', helmet: '#F2552C', ink: '#2B2B33', light: '#FFFFFF' }
 };
 
 const VB = 260;
